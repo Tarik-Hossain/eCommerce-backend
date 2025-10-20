@@ -1,0 +1,43 @@
+#For H2 (In-Memory Database):
+spring.config.activate.on-profile: dev
+
+spring.datasource:
+  url: jdbc:postgresql://localhost:5432/expensedb?currentSchema=ecommerce
+  #  url: jdbc:h2:mem:expensedb;MODE=PostgreSQL;DB_CLOSE_DELAY=-1  # In-memory H2 database
+  #  driver-class-name: org.h2.Driver
+  driver-class-name: org.postgresql.Driver
+  username: tarif  # Default username for H2
+  password: tarif@123  # Default password for H2
+
+spring.jpa.hibernate:
+  ddl-auto: update  # Automatically update schema in dev environment
+
+spring.flyway:
+  enabled: true
+  locations: classpath:db/migration  # Location for migration scripts
+
+#spring.h2.console:
+#  enabled: true  # Enable H2 console
+#  path: /h2-console  # Path to access the H2 console in the browser
+
+server:
+  port: 8080  # Port for the application
+
+
+
+
+#For PostgreSQL (Used in Dev):
+
+#spring:
+#  profiles: dev
+#  datasource:
+#    url: jdbc:postgresql://localhost:5432/expensedb
+#    username: expense_user
+#    password: expense_password
+#    driver-class-name: org.postgresql.Driver
+#  jpa:
+#    hibernate:
+#      ddl-auto: update  # Allows automatic schema generation
+#  flyway:
+#    enabled: true
+#    locations: classpath:db/migration
