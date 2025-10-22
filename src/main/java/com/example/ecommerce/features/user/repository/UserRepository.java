@@ -1,11 +1,7 @@
 package com.example.ecommerce.features.user.repository;
 
-import com.example.ecommerce.entity.User;
+import com.example.ecommerce.features.user.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
-@Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-    boolean existsByUsername(String username);
-    boolean existsByEmail(String email);
 }
