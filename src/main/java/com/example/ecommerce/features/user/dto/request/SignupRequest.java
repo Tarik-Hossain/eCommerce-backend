@@ -1,4 +1,3 @@
-// java
 package com.example.ecommerce.features.user.dto.request;
 
 import jakarta.validation.constraints.Email;
