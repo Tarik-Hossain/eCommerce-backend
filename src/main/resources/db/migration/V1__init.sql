@@ -48,18 +48,24 @@ VALUES
 -- =========================
 CREATE TABLE orders (
                         id SERIAL PRIMARY KEY,
-                        user_id INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-                        total_amount NUMERIC(10,2) NOT NULL,
-                        status VARCHAR(50) DEFAULT 'PENDING',
-                        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                        user_id BIGINT NOT NULL,
+                        total_amount DECIMAL(12, 2) NOT NULL,
+                        shipping_address TEXT NOT NULL,
+                        payment_method VARCHAR(50) NOT NULL,
+                        status VARCHAR(30) NOT NULL,  -- 'PENDING', 'COMPLETED', 'CANCELLED'
+                        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE order_items (
                              id SERIAL PRIMARY KEY,
-                             order_id INT NOT NULL REFERENCES orders(id) ON DELETE CASCADE,
-                             product_id INT NOT NULL REFERENCES products(id),
+                             order_id BIGINT REFERENCES orders(id) ON DELETE CASCADE,
+                             product_id BIGINT NOT NULL,
+                             product_name VARCHAR(255) NOT NULL,
+                             unit_price DECIMAL(12, 2) NOT NULL,
                              quantity INT NOT NULL,
-                             price NUMERIC(10,2) NOT NULL
+                             subtotal DECIMAL(12, 2) NOT NULL
+                             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 -- =========================

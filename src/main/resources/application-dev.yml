@@ -2,7 +2,7 @@
 spring.config.activate.on-profile: dev
 
 spring.datasource:
-  url: jdbc:postgresql://localhost:5432/expensedb?currentSchema=ecommerce
+  url: jdbc:postgresql://localhost:5432/ecommercedb?currentSchema=ecommerce
   #  url: jdbc:h2:mem:expensedb;MODE=PostgreSQL;DB_CLOSE_DELAY=-1  # In-memory H2 database
   #  driver-class-name: org.h2.Driver
   driver-class-name: org.postgresql.Driver
