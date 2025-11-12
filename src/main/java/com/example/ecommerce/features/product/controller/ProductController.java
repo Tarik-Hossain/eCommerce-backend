@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 
 @RestController
 @RequestMapping("/v1/api/products")
@@ -29,5 +31,15 @@ public class ProductController {
         String response = productService.addProduct(product);
         return ResponseEntity.ok(response);
     }
+    @GetMapping("/{id}")
+    public ResponseEntity<Product> getProductById(@PathVariable Long id) {
+        Optional<Product> product = productService.getProductById(id);
+        if (product.isPresent()) {
+            return ResponseEntity.ok(product.get());
+        } else {
+            return ResponseEntity.notFound().build();  // Return 404 if product is not found
+        }
+    }
+
 
 }

@@ -72,18 +72,25 @@ CREATE TABLE order_items (
 -- features/cart -> cart and cart_items
 -- =========================
 CREATE TABLE cart (
-                      id SERIAL PRIMARY KEY,
-                      user_id INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-                      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                      id BIGINT AUTO_INCREMENT PRIMARY KEY,
+                      user_id BIGINT NOT NULL,
+                      total_amount DECIMAL(12,2) DEFAULT 0.00,
+                      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                      updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
 CREATE TABLE cart_items (
-                            id SERIAL PRIMARY KEY,
-                            cart_id INT NOT NULL REFERENCES cart(id) ON DELETE CASCADE,
-                            product_id INT NOT NULL REFERENCES products(id),
-                            quantity INT NOT NULL
+                            id BIGINT AUTO_INCREMENT PRIMARY KEY,
+                            cart_id BIGINT NOT NULL,
+                            product_id BIGINT,
+                            product_name VARCHAR(255),
+                            unit_price DECIMAL(12,2),
+                            quantity INT,
+                            subtotal DECIMAL(12,2),
+                            FOREIGN KEY (cart_id) REFERENCES carts(id) ON DELETE CASCADE
 );
-
+CREATE INDEX idx_cart_user ON carts(user_id);
+CREATE INDEX idx_cartitem_cart ON cart_items(cart_id);
 
 -- =========================
 -- features/utility -> bills
