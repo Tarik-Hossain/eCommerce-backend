@@ -1,5 +1,7 @@
 package com.example.ecommerce.features.product.controller;
 
+import com.example.ecommerce.features.order.dto.request.OrderRequest;
+import com.example.ecommerce.features.order.model.Order;
 import com.example.ecommerce.features.product.dto.request.ProductRequest;
 import com.example.ecommerce.features.product.model.Product;
 import com.example.ecommerce.features.product.service.ProductService;
@@ -20,25 +22,18 @@ public class ProductController {
     public ProductController(ProductService productService) {
         this.productService = productService;
     }
-@PostMapping   ("/addProduct")
-    public ResponseEntity<String> addProduct(@RequestBody ProductRequest productRequest) {
 
-        Product product = new Product();
-        product.setName(productRequest.getName());
-        product.setDescription(productRequest.getDescription());
-        product.setPrice(productRequest.getPrice());
-        product.setStock(productRequest.getStock());
-        String response = productService.addProduct(product);
-        return ResponseEntity.ok(response);
+@PostMapping   ("/addProduct")
+    public ResponseEntity<Product> addProduct(@RequestBody ProductRequest productRequest) {
+     Product product=productService.addProduct(productRequest);
+
+        return ResponseEntity.ok(product);
     }
     @GetMapping("/{id}")
     public ResponseEntity<Product> getProductById(@PathVariable Long id) {
         Optional<Product> product = productService.getProductById(id);
-        if (product.isPresent()) {
-            return ResponseEntity.ok(product.get());
-        } else {
-            return ResponseEntity.notFound().build();  // Return 404 if product is not found
-        }
+        // Return 404 if product is not found
+        return product.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
 

@@ -1,6 +1,8 @@
 package com.example.ecommerce.features.user.controller;
 
+import com.example.ecommerce.features.user.dto.request.LoginRequest;
 import com.example.ecommerce.features.user.dto.request.SignupRequest;
+import com.example.ecommerce.features.user.dto.response.AuthResponse;
 import com.example.ecommerce.features.user.model.User;
 import com.example.ecommerce.features.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,16 +21,15 @@ public class UserController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<String> signup(@RequestBody SignupRequest signupRequest) {
-        // Convert the SignupRequest DTO to User entity
-        User user = new User();
-        user.setUsername(signupRequest.getUsername());
-        user.setEmail(signupRequest.getEmail());
-        user.setPassword(signupRequest.getPassword());
-        user.setRole(signupRequest.getRole());
+    public ResponseEntity<User> signup(@RequestBody SignupRequest signupRequest) {
+        User user=userService.signupUser(signupRequest);
 
-        // Call the service to handle the signup logic
-        String response = userService.signupUser(user);
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(user);
+    }
+
+    @PostMapping("/signin")
+    public ResponseEntity<AuthResponse> signin(@RequestBody LoginRequest loginRequest) {
+        String token = userService.loginUser(loginRequest);
+        return ResponseEntity.ok(new AuthResponse(token));
     }
 }

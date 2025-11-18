@@ -1,0 +1,28 @@
+package com.example.ecommerce.features.user.dto.response;
+
+public class AuthResponse {
+    private String token;
+    private String tokenType = "Bearer";
+
+    public AuthResponse() {}
+
+    public AuthResponse(String token) {
+        this.token = token;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public String getTokenType() {
+        return tokenType;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public void setTokenType(String tokenType) {
+        this.tokenType = tokenType;
+    }
+}
